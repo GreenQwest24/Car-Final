@@ -1,39 +1,27 @@
+# graph.py
 
-from car import Car
-from rider import Rider
-
-
-class Simulation:
+class Graph:
     def __init__(self):
-        # Dictionary of car_id: Car object
-        self.cars = {}
+        self.adjacency_list = {}
 
-        # Dictionary of rider_id: Rider object
-        self.riders = {}
+    def add_edge(self, start_node, end_node, weight):
+        if start_node not in self.adjacency_list:
+            self.adjacency_list[start_node] = []
+        self.adjacency_list[start_node].append((end_node, weight))
 
-    def add_car(self, car):
-        """Add a Car object to the simulation."""
-        self.cars[car.id] = car
+    def load_from_file(self, filename):
+        import csv
+        try:
+            with open(filename, mode='r') as file:
+                reader = csv.reader(file)
+                for row in reader:
+                    start, end, weight = row[0], row[1], float(row[2])
+                    self.add_edge(start, end, weight)
+        except FileNotFoundError:
+            print(f"Map file '{filename}' not found.")
 
-    def add_rider(self, rider):
-        """Add a Rider object to the simulation."""
-        self.riders[rider.id] = rider
 
-    def __str__(self):
-        return (f"Simulation State:\n"
-                f"Cars:\n" + "\n".join(str(c) for c in self.cars.values()) +
-                "\nRiders:\n" + "\n".join(str(r) for r in self.riders.values()))
 
-# Basic test run
-if __name__ == "__main__":
-    # Create a car and rider
-    car1 = Car("CAR001", (5, 5))
-    rider1 = Rider("RIDER_A", (1, 2), (20, 15))
 
-    # Create simulation and add them
-    sim = Simulation()
-    sim.add_car(car1)
-    sim.add_rider(rider1)
 
-    # Display the simulation state
-    print(sim)
+       
