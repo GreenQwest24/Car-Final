@@ -1,0 +1,9 @@
+start_node,end_node,travel_time
+A,B,5
+B,A,5
+A,C,3
+C,A,3
+B,D,4
+D,B,4
+C,D,1
+D,C,1
